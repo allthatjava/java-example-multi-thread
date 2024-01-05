@@ -1,4 +1,4 @@
-package com.example.bootexamplemultithread.example4.example5;
+package com.example.bootexamplemultithread.example5;
 
 public class MultiLocksMain {
 

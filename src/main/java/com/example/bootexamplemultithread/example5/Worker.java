@@ -1,4 +1,4 @@
-package com.example.bootexamplemultithread.example4.example5;
+package com.example.bootexamplemultithread.example5;
 
 import java.util.ArrayList;
 import java.util.List;
