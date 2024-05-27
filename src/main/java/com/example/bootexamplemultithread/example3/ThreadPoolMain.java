@@ -22,13 +22,15 @@ class Processor implements Runnable{
 
 public class ThreadPoolMain {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         // Limit the pool size as 2 for testing reuse Pools
         final ExecutorService executor = Executors.newFixedThreadPool(2);
 //        final ExecutorService executor = Executors.newCachedThreadPool();
 
         for( int i=0; i<100; i++){
             executor.submit(new Processor(i));
+
+            Thread.sleep(100);
 
             final ThreadPoolExecutor threadPool = (ThreadPoolExecutor) executor;
             System.out.println("Current pool size: " + threadPool.getPoolSize());
