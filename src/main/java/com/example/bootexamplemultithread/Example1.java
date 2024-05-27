@@ -48,7 +48,7 @@ class Runner implements Runnable{
     }
 }
 
-public class JavaThreadApplication{
+public class Example1 {
     public static void main(String[] args) throws InterruptedException {
 
         Thread runner = new Thread(new Runner());

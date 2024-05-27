@@ -9,9 +9,13 @@ public class ProducerConsumerThread {
     private static BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(10);
 
     private static void producer() throws InterruptedException{
+        int totalCount = 1;
         Random random = new Random();
-        while(true){
-            queue.put(random.nextInt(10));
+        while(totalCount <= 50){
+            int randomIn = random.nextInt(10);
+            System.out.println(totalCount+"th Adding "+randomIn+" to queue");
+            queue.put(randomIn);
+            totalCount++;
         }
     }
 

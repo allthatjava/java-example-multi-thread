@@ -1,8 +1,6 @@
 package com.example.bootexamplemultithread.example3;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 
 class Processor implements Runnable{
     private int id;
@@ -14,7 +12,7 @@ class Processor implements Runnable{
         System.out.println("Process Start:"+id+", "+Thread.currentThread().getName());
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -26,10 +24,14 @@ public class ThreadPoolMain {
 
     public static void main(String[] args) {
         // Limit the pool size as 2 for testing reuse Pools
-        ExecutorService executor = Executors.newFixedThreadPool(2);
+//        final ExecutorService executor = Executors.newFixedThreadPool(2);
+        final ExecutorService executor = Executors.newCachedThreadPool();
 
-        for( int i=0; i<5; i++){
+        for( int i=0; i<100; i++){
             executor.submit(new Processor(i));
+
+            final ThreadPoolExecutor threadPool = (ThreadPoolExecutor) executor;
+            System.out.println("Current pool size: " + threadPool.getPoolSize());
         }
         executor.shutdown();
         System.out.println("All task submitted");
