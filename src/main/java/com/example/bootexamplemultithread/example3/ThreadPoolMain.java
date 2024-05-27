@@ -24,8 +24,8 @@ public class ThreadPoolMain {
 
     public static void main(String[] args) {
         // Limit the pool size as 2 for testing reuse Pools
-//        final ExecutorService executor = Executors.newFixedThreadPool(2);
-        final ExecutorService executor = Executors.newCachedThreadPool();
+        final ExecutorService executor = Executors.newFixedThreadPool(2);
+//        final ExecutorService executor = Executors.newCachedThreadPool();
 
         for( int i=0; i<100; i++){
             executor.submit(new Processor(i));
