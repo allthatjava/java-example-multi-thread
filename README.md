@@ -20,8 +20,8 @@ Using three ways to create and run the Thread.
 
 ### Example 4 :
 - Use `BlockingQueue` to use two Thread as Provider and Consumer pattern
-- Thread1 keep providing random number to queue until it reached to the limit
-- Thread2 keep taking out the item from queue
+- Producer keeps providing random number to queue until it reached to the limit
+- Consumer keeps taking out the item from queue
 
 ### Example 5 :
 - Use locking mechanism to guarantee the outcome result
