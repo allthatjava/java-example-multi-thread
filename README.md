@@ -25,3 +25,4 @@ Using three ways to create and run the Thread.
 
 ### Example 5 :
 - Use locking mechanism to guarantee the outcome result
+- Overwritten locking mechanism with Java 1.5 `Lock` class from synchronized technique
