@@ -6,58 +6,18 @@ import java.util.concurrent.BlockingQueue;
 
 public class ProducerConsumerThread {
 
-    private static BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(10);
+    public static void main(String[] args) {
+        Producer producer = new Producer();
+        producer.start();
 
-    private static void producer() throws InterruptedException{
-        int totalCount = 1;
-        Random random = new Random();
-        while(totalCount <= 50){
-            int randomIn = random.nextInt(10);
-            System.out.println(totalCount+"th Adding "+randomIn+" to queue");
-            queue.put(randomIn);
-            totalCount++;
-        }
-    }
-
-    private static void consumer(){
-        Random random = new Random();
-        while(true){
-            try{
-                Thread.sleep(100);
-                if( random.nextInt(10)==0){
-                    Integer value = queue.take();
-                    System.out.println("Taken value:"+value+"; Queue size is="+queue.size());
-                    System.out.println(queue);
-                }
-            }catch(InterruptedException e){
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
-    public static void main(String[] args) throws InterruptedException {
-        Thread t1 = new Thread(new Runnable(){
-            @Override
-            public void run() {
-                try {
-                    producer();
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        });
-
-        Thread t2 = new Thread(new Runnable(){
-            @Override
-            public void run() {
-                    consumer();
-            }
-        });
-
-        t1.start();
-        t2.start();
-
-        t1.join();
-        t2.join();
+        Consumer consumer1=new Consumer(producer);
+        consumer1.setName("Consumer 1");
+        consumer1.start();
+        Consumer consumer2=new Consumer(producer);
+        consumer2.setName("Consumer 2");
+        consumer2.start();
+        Consumer consumer3=new Consumer(producer);
+        consumer3.setName("Consumer 3");
+        consumer3.start();
     }
 }
