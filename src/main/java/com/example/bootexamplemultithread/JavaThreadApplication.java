@@ -1,8 +1,5 @@
 package com.example.bootexamplemultithread;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
 class SharedResource {
     private volatile boolean flag = false;
     public void setFlagTrue(){
@@ -29,10 +26,14 @@ class ThreadRunner extends Thread{
         System.out.println("ThreadRunner "+name+" Test");
 
         try {
-            if(resource.getFlag())
-                System.out.println(name+" Flag:"+resource.getFlag());
-            else
-                resource.setFlagTrue();
+            synchronized (resource) {   // Sync with shared resource
+                if (resource.getFlag()) {
+                    System.out.println("Thread:" + name + " Flag:" + resource.getFlag());
+                } else {
+                    System.out.println("Change the Flag to true in Thread:" + name);
+                    resource.setFlagTrue();
+                }
+            }
 
             Thread.sleep(1000);
         } catch (InterruptedException e) {
@@ -53,7 +54,7 @@ public class JavaThreadApplication{
         Thread runner = new Thread(new Runner());
         runner.start();
 
-        // Used volitile keyword to share the variable's value between thread
+        // Used volatile keyword to share the variable's value between thread
         SharedResource resource = new SharedResource();
         ThreadRunner runner2 = new ThreadRunner(resource,"runner2");
         runner2.start();
