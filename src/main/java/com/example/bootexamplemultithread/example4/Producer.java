@@ -6,30 +6,32 @@ import java.util.concurrent.BlockingQueue;
 
 public class Producer extends Thread{
 
-    private BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(10);
+    private final BlockingQueue<Integer> queue = new ArrayBlockingQueue<>(10);
+    Random random = new Random();
+    int consumeCounter = 0;
 
+    @Override
     public void run() {
         int totalCount = 1;
-        Random random = new Random();
         while(totalCount <= 50){
             int randomIn = random.nextInt(10);
             System.out.println(totalCount+"th Adding "+randomIn+" to queue");
             try {
                 queue.put(randomIn);
+                System.out.println(queue);
             } catch (InterruptedException e) {
             }
             totalCount++;
         }
     }
 
-    public void consume(){
-        Random random = new Random();
+    public synchronized void consume(){
         while(!queue.isEmpty()){
             try{
                 Thread.sleep(100);
                 if( random.nextInt(10)==0){
                     Integer value = queue.take();
-                    System.out.println(Thread.currentThread().getName()+"-Taken value:"+value+"; Queue size is="+queue.size());
+                    System.out.println((++consumeCounter)+"th Take - "+Thread.currentThread().getName()+"-Taken value:"+value+"; Queue size is="+queue.size());
                     System.out.println(queue);
                 }
             }catch(InterruptedException e){
