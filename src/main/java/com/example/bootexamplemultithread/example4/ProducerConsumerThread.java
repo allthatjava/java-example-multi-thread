@@ -19,5 +19,14 @@ public class ProducerConsumerThread {
         Consumer consumer3=new Consumer(producer);
         consumer3.setName("Consumer 3");
         consumer3.start();
+
+        try {
+            producer.join();
+            consumer1.join();
+            consumer2.join();
+            consumer3.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
